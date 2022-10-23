@@ -13,9 +13,6 @@ type TicTacSquareProps = {
   oName?: string;
 };
 
-// interface - z góry obiekt (wykorzystywane do opisu struktury danych)
-// z class rzadko korzystamy
-
 const SQUARE_INIT_STATE = [
   { playerChoose: undefined, id: 1 },
   { playerChoose: undefined, id: 2 },
@@ -28,11 +25,33 @@ const SQUARE_INIT_STATE = [
   { playerChoose: undefined, id: 9 },
 ];
 
-const TicTacSquare: React.FC<TicTacSquareProps> = ({pName, oName}) => {
+const TicTacSquare: React.FC<TicTacSquareProps> = ({ pName, oName }) => {
   const [content, setContent] = useState<playerChooseType[]>(SQUARE_INIT_STATE);
   const [winGame, setWinGame] = useState<boolean>(false);
 
   const [playerName, setPlayerName] = useState<string | undefined>(pName);
+
+  const computerPickHandler = (id: number) => {
+    const emptySquare = content.filter(
+      (item) => typeof item.playerChoose !== "string"
+    );
+    const pickedItemIndex = Math.floor(Math.random() * emptySquare.length);
+
+    const newContent = { playerChoose: "O", id: id };
+
+    // emptySquare[pickedItemIndex];
+    if (playerName === "Computer") {
+      setContent((prevState) => {
+        return [
+          ...prevState.slice(0, pickedItemIndex),
+          { ...newContent },
+          ...prevState.slice(pickedItemIndex + 1),
+        ];
+      });
+    }
+
+    setPlayerName(pName);
+  };
 
   const playerWinHandler = () => {
     const squareContent = content.map((item) => item.playerChoose);
@@ -91,25 +110,31 @@ const TicTacSquare: React.FC<TicTacSquareProps> = ({pName, oName}) => {
             ...prevState.slice(selectedIndex + 1),
           ];
         });
-
         setPlayerName(oName);
+
+        if (oName === "Computer") {
+          setTimeout(computerPickHandler.bind(null, id), 1000);
+        }
       }
       if (playerName === oName) {
         const newContent = { playerChoose: "O", id: id };
-        setContent((prevState) => {
-          const selectedIndex = prevState.findIndex((item) => item.id === id);
 
-          if (contentCondition) {
-            return [...prevState];
-          }
+        if (oName !== "Computer") {
+          setContent((prevState) => {
+            const selectedIndex = prevState.findIndex((item) => item.id === id);
 
-          return [
-            ...prevState.slice(0, selectedIndex),
-            { ...newContent },
-            ...prevState.slice(selectedIndex + 1),
-          ];
-        });
-        setPlayerName(pName);
+            if (contentCondition) {
+              return [...prevState];
+            }
+
+            return [
+              ...prevState.slice(0, selectedIndex),
+              { ...newContent },
+              ...prevState.slice(selectedIndex + 1),
+            ];
+          });
+          setPlayerName(pName);
+        }
       }
     }
     if (contentCondition && !winGame) {

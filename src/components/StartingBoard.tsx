@@ -24,7 +24,7 @@ const StartingBoard: React.FC<StartingBoardProps> = ({
     // console.log(firstPlayer);
     // console.log(typeof secondPlayer === "string" ? secondPlayer : null);
 
-    onGetPlayersName(firstPlayer, secondPlayer);
+    onGetPlayersName(firstPlayer, secondPlayer ? secondPlayer : 'Computer');
 
     onLetsPlay("RUN_GAME");
   };
