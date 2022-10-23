@@ -1,0 +1,44 @@
+.ticTacSquare {
+  display: flex;
+  flex-wrap: wrap;
+  height: 30.4rem;
+  width: 30.4rem;
+  border: 2px solid #5d5c61;
+}
+
+.heading {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.winner {
+  font-size: 2.5rem;
+  margin-top: 1rem;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+  color: #7fee00;
+}
+
+.btn-container {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 0.7rem 1.3rem;
+  border: none;
+  border-radius: 15px;
+  transition: scale 0.3s ease-in;
+  backface-visibility: hidden;
+}
+
+.button:hover {
+  cursor: pointer;
+  scale: 1.1;
+}
