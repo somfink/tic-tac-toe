@@ -34,6 +34,8 @@ const TicTacSquare: React.FC<TicTacSquareProps> = ({pName, oName}) => {
 
   const [playerName, setPlayerName] = useState<string | undefined>(pName);
 
+  const p2Name = oName ? oName : 'Computer';
+
   const playerWinHandler = () => {
     const squareContent = content.map((item) => item.playerChoose);
 
@@ -92,9 +94,9 @@ const TicTacSquare: React.FC<TicTacSquareProps> = ({pName, oName}) => {
           ];
         });
 
-        setPlayerName(oName);
+        setPlayerName(p2Name);
       }
-      if (playerName === oName) {
+      if (playerName === p2Name) {
         const newContent = { playerChoose: "O", id: id };
         setContent((prevState) => {
           const selectedIndex = prevState.findIndex((item) => item.id === id);
@@ -129,9 +131,9 @@ const TicTacSquare: React.FC<TicTacSquareProps> = ({pName, oName}) => {
 
   const whoWinGame = () => {
     if (playerName === pName) {
-      return `Winner is ${oName} - O`;
+      return `Winner is ${p2Name} - O`;
     }
-    if (playerName === oName) {
+    if (playerName === p2Name) {
       return `Winner is ${pName} - X`;
     }
   };
