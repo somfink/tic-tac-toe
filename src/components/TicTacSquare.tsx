@@ -8,6 +8,11 @@ type playerChooseType = {
   id: number;
 };
 
+type TicTacSquareProps = {
+  pName?: string;
+  oName?: string;
+};
+
 // interface - z góry obiekt (wykorzystywane do opisu struktury danych)
 // z class rzadko korzystamy
 
@@ -23,11 +28,11 @@ const SQUARE_INIT_STATE = [
   { playerChoose: undefined, id: 9 },
 ];
 
-const TicTacSquare: React.FC = () => {
+const TicTacSquare: React.FC<TicTacSquareProps> = ({pName, oName}) => {
   const [content, setContent] = useState<playerChooseType[]>(SQUARE_INIT_STATE);
   const [winGame, setWinGame] = useState<boolean>(false);
 
-  const [playerName, setPlayerName] = useState<string>("Player 1");
+  const [playerName, setPlayerName] = useState<string | undefined>(pName);
 
   const playerWinHandler = () => {
     const squareContent = content.map((item) => item.playerChoose);
@@ -71,7 +76,7 @@ const TicTacSquare: React.FC = () => {
       content[id - 1].playerChoose === "X" ||
       content[id - 1].playerChoose === "O";
     if (!contentCondition && !winGame) {
-      if (playerName === "Player 1") {
+      if (playerName === pName) {
         const newContent = { playerChoose: "X", id: id };
         setContent((prevState) => {
           const selectedIndex = prevState.findIndex((item) => item.id === id);
@@ -87,9 +92,9 @@ const TicTacSquare: React.FC = () => {
           ];
         });
 
-        setPlayerName("Player 2");
+        setPlayerName(oName);
       }
-      if (playerName === "Player 2") {
+      if (playerName === oName) {
         const newContent = { playerChoose: "O", id: id };
         setContent((prevState) => {
           const selectedIndex = prevState.findIndex((item) => item.id === id);
@@ -104,7 +109,7 @@ const TicTacSquare: React.FC = () => {
             ...prevState.slice(selectedIndex + 1),
           ];
         });
-        setPlayerName("Player 1");
+        setPlayerName(pName);
       }
     }
     if (contentCondition && !winGame) {
@@ -119,15 +124,15 @@ const TicTacSquare: React.FC = () => {
   const resetGameHandler = () => {
     setContent(SQUARE_INIT_STATE);
     setWinGame(false);
-    setPlayerName("Player 1");
+    setPlayerName(pName);
   };
 
   const whoWinGame = () => {
-    if (playerName === "Player 1") {
-      return `Winner is Player 2 - O`;
+    if (playerName === pName) {
+      return `Winner is ${oName} - O`;
     }
-    if (playerName === "Player 2") {
-      return `Winner is Player 1 - X`;
+    if (playerName === oName) {
+      return `Winner is ${pName} - X`;
     }
   };
 

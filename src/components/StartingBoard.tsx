@@ -1,8 +1,14 @@
 import { useRef, useState } from "react";
 import "./StartingBoard.css";
 
-const StartingBoard: React.FC<{ onLetsPlay: (gameStatus: string) => void }> = ({
+interface StartingBoardProps {
+  onLetsPlay: (gameStatus: string) => void;
+  onGetPlayersName: (p1Name?: string, p2Name?: string) => void;
+}
+
+const StartingBoard: React.FC<StartingBoardProps> = ({
   onLetsPlay,
+  onGetPlayersName,
 }) => {
   const [oponent, setOponent] = useState<any>(null);
 
@@ -15,8 +21,10 @@ const StartingBoard: React.FC<{ onLetsPlay: (gameStatus: string) => void }> = ({
     const firstPlayer = playerOneRef.current?.value;
     const secondPlayer = playerTwoRef.current?.value;
 
-    console.log(firstPlayer);
-    console.log(secondPlayer);
+    // console.log(firstPlayer);
+    // console.log(typeof secondPlayer === "string" ? secondPlayer : null);
+
+    onGetPlayersName(firstPlayer, secondPlayer);
 
     onLetsPlay("RUN_GAME");
   };
