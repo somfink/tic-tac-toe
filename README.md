@@ -1,6 +1,7 @@
 # Tic Tac Toe Game
 
 This game was made to practice using typescript in React on a real example.
+Allows you to play in a PvP or player vs computer configuration by using a simple random computer selection algorithm.
 
 ## Stack:
 
